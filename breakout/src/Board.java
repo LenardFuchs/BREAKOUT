@@ -267,7 +267,7 @@ public class Board extends JPanel {
             if (j == Commons.N_OF_BRICKS) { // we check how many bricks are destroyed, if it is equal to initial number of bricks
 
                 gameover = "Victory"; // we win
-                //stopGame();
+                stopGame();
                 //new Board();
             }
         }
