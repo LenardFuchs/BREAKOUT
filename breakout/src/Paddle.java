@@ -5,7 +5,9 @@ import javax.swing.ImageIcon;
 
 public class Paddle extends Sprite  {
 
-    private int dx; // direction variable
+    private int dx;
+
+    // direction variable
 
     public Paddle() {
 
@@ -21,7 +23,7 @@ public class Paddle extends Sprite  {
 
     private void loadImage() {
 
-        var ii = new ImageIcon("src/resources/stick.jpg");
+        var ii = new ImageIcon("src/resources/star1.jpg");
         image = ii.getImage();
     }
 

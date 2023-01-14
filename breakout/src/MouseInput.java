@@ -13,13 +13,13 @@ public class MouseInput implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-            int mx = e.getX();
-            int my = e.getY();
-       // public Rectangle playButton = new Rectangle(Commons.WIDTH/2 -50 ,150,100,50);
-        if (mx >100 && mx <= 200){
+        int mx = e.getX();
+        int my = e.getY();
+        // public Rectangle playButton = new Rectangle(Commons.WIDTH/2 -50 ,150,100,50);
+        if (mx >Commons.WIDTH/2 -50 && mx <= Commons.WIDTH/2 +50){
             if (my>= 150 && my<= 200 ){
-                 Board.setState(State.INGAME);
-                 System.out.println("click");
+                Board.setState(State.INGAME);
+                System.out.println("click");
             }
         }
     }

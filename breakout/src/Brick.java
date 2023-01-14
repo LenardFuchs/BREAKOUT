@@ -22,8 +22,23 @@ public class Brick extends Sprite {
 
     private void loadImage() {  //method to load image file to a certain brick
 
-        var ii = new ImageIcon("src/resources/cigar(1).jpg");
-        image = ii.getImage();
+
+        switch(Board.currentLevel){
+            case Level1:
+                var ii = new ImageIcon("src/resources/choco2.jpg");
+                image = ii.getImage();
+                break;
+            case Level2:
+                ii = new ImageIcon("src/resources/star1.jpg");
+                image = ii.getImage();
+                break;
+            case Level3:
+                ii = new ImageIcon("src/resources/choco2.jpg");
+                image = ii.getImage();
+                break;
+        }
+
+
     }
 
     boolean isDestroyed() {  //method which asks what is the state of the brick

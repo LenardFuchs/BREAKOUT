@@ -1,10 +1,16 @@
 //core code from https://zetcode.com/javagames/breakout/ 10.01.2023
 
 import javax.swing.ImageIcon; //class Imageicon that paints Icons from Images
+import java.awt.event.KeyEvent;
+
 public class Ball extends Sprite {
 
     private int xdir; //variable  for the directions of the ball in the X coordinate -1 = left, 1 = right
     private int ydir; //variable for the directions of the ball in the Y coordinate, -1 = up , 1 = down
+
+    private int dx;
+
+    private boolean launched;
 
     public Ball() { //constructor
 
@@ -13,8 +19,9 @@ public class Ball extends Sprite {
 
     private void initBall() { //initial movement of the ball, up and to the right
 
-        xdir = 1;
-        ydir = -1;
+        launched = false;
+        xdir = 0;
+        ydir = 0;
 
         loadImage();
         getImageDimensions();
@@ -23,7 +30,7 @@ public class Ball extends Sprite {
 
     private void loadImage() {
 
-        var ii = new ImageIcon("src/resources/the rock (1).jpg");
+        var ii = new ImageIcon("src/resources/goldball1.png");
         image = ii.getImage();
     }
 
@@ -40,25 +47,26 @@ public class Ball extends Sprite {
 
     void move() { // this method controls how the ball should move
 
-        x += xdir;
-        y += ydir;
+        if (launched){
+            x += xdir;
+            y += ydir;
 
-        if (x == 0) { // if the ball hits the left border
+            if (x == 0) { // if the ball hits the left border
 
-            setXDir(1); // it changes its direction to right
-        }
+                setXDir(1); // it changes its direction to right
+            }
 
-        if (x == Commons.WIDTH - imageWidth) { // if the ball hits the right border
+            if (x == Commons.WIDTH - imageWidth) { // if the ball hits the right border
 
-            System.out.println(imageWidth);
-            setXDir(-1); // it changes its direction to left
+                System.out.println(imageWidth);
+                setXDir(-1); // it changes its direction to left
 
-        }
+            }
 
-        if (y == 0) { // if the ball hits the upper border,
+            if (y == 0) { // if the ball hits the upper border,
 
-            setYDir(1); //the ball goes down
-        }
+                setYDir(1); //the ball goes down
+            }}
     }
 
     private void resetState() {
@@ -66,6 +74,37 @@ public class Ball extends Sprite {
         x = Commons.INIT_BALL_X;
         y = Commons.INIT_BALL_Y;
     }
+
+    void keyPressed(KeyEvent e) {
+
+        int key = e.getKeyCode();
+
+
+        if (key == KeyEvent.VK_UP) {
+
+            launchBall();
+
+        }
+
+
+    }
+
+    void launchBall(){
+
+        if(!launched){
+            launched =true;
+            xdir =1;
+            ydir =-1;
+        }
+
+    }
+
+    public boolean isLaunched(){
+        return launched;
+    }
+
+
+
 
 
 
