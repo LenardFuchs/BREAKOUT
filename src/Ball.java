@@ -2,6 +2,7 @@
 
 import javax.swing.ImageIcon; //class Imageicon that paints Icons from Images
 import java.awt.event.KeyEvent;
+import java.security.Key;
 
 public class Ball extends Sprite {
 
@@ -86,14 +87,38 @@ public class Ball extends Sprite {
 
             }
 
+            if (key == KeyEvent.VK_LEFT){
+                dx = -1;
+            }
+            if (key == KeyEvent.VK_RIGHT){
+                dx = 1;
+            }
+
 
     }
+
+    void keyReleased(KeyEvent e) { //releasing the arrow keys, the paddle stops moving
+
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_LEFT) {
+
+            dx = 0;
+        }
+        if (key == KeyEvent.VK_RIGHT) {
+
+            dx = 0;
+        }
+
+    }
+
+
 
     void launchBall(){
 
         if(!launched){
-            launched =true;
-            xdir =1;
+            launched = true;
+            xdir = 1;
             ydir =-1;
         }
 
@@ -103,10 +128,32 @@ public class Ball extends Sprite {
         return launched;
     }
 
+    public void aimBall(){
+
+        if(!launched){
+
+            x += dx;
+
+            if (x <= 0) {
+
+                x = 0;
+            }
+
+            if (x >= Commons.WIDTH - imageWidth) {
+
+                x = Commons.WIDTH - imageWidth;
+            }
+        }
+
+        }
+
+    }
 
 
 
 
 
-}
+
+
+
 

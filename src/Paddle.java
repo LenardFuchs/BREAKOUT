@@ -74,7 +74,6 @@ public class Paddle extends Sprite  {
 
             dx = 0;
         }
-
         if (key == KeyEvent.VK_RIGHT) {
 
             dx = 0;

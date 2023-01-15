@@ -218,6 +218,7 @@ public class Board extends JPanel {
 
             if (state == State.INGAME) {
                 paddle.keyReleased(e);
+                ball.keyReleased(e);
             }
         }
 
@@ -257,7 +258,10 @@ public class Board extends JPanel {
                 paddle.move();
                 for (int i = 0; i < obstacle.length; i++) {
                     obstacle[i].move();
-                }}
+                }}else{
+                    ball.aimBall();
+                    paddle.move();
+                }
 
                 checkCollision();
                 repaint();
@@ -281,11 +285,6 @@ public class Board extends JPanel {
         ball = new Ball();
         paddle = new Paddle();
         timer.start();
-    }
-
-    private void pauseGame(){
-        state = State.PAUSE;
-        timer.stop();
     }
 
     private void checkCollision() {
@@ -457,9 +456,6 @@ public class Board extends JPanel {
 
             }
         }
-
-
-
 
 
 
