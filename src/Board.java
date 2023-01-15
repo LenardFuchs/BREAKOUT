@@ -47,7 +47,7 @@ public class Board extends JPanel {
     private void initBoard() {
 
         setState(State.MENU);
-        setCurrentLevel(GameLevel.Level1);
+        setCurrentLevel(GameLevel.Level3);
         addKeyListener(new TAdapter());
         setFocusable(true);
         setPreferredSize(new Dimension(Commons.WIDTH, Commons.HEIGHT));
@@ -113,6 +113,23 @@ public class Board extends JPanel {
 
         if (state == State.MENU) {
             menu.render(g);
+
+        } else if (state == State.PAUSE){
+            drawObjects(g2d);
+
+            var font = new Font("Comic Sans", Font.BOLD, 18);
+            FontMetrics fontMetrics = this.getFontMetrics(font);
+
+            g2d.setColor(Color.BLACK);
+            g2d.setFont(font);
+            g2d.drawString("GAME PAUSED",
+                    (Commons.WIDTH - fontMetrics.stringWidth("GAME PAUSED")) / 2,
+                    Commons.WIDTH / 2);
+
+
+
+
+
 
         } else if (state == State.INGAME) {
 
@@ -213,6 +230,10 @@ public class Board extends JPanel {
                 ball.keyPressed(e);
             }
 
+            else if (state == State.PAUSE){
+                paddle.keyPressed(e);
+            }
+
         }
 
     }
@@ -242,6 +263,9 @@ public class Board extends JPanel {
                 repaint();
 
         }
+        if (state== State.PAUSE){
+            repaint();
+        }
     }
 
     private void stopGame() {
@@ -257,6 +281,11 @@ public class Board extends JPanel {
         ball = new Ball();
         paddle = new Paddle();
         timer.start();
+    }
+
+    private void pauseGame(){
+        state = State.PAUSE;
+        timer.stop();
     }
 
     private void checkCollision() {

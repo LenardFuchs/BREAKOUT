@@ -55,6 +55,15 @@ public class Paddle extends Sprite  {
 
             dx = 1; // paddle moves to the right
         }
+        if(key ==KeyEvent.VK_SPACE){
+
+            if (Board.state ==State.INGAME){
+            Board.setState(State.PAUSE);}
+
+            else if (Board.state ==State.PAUSE){
+                Board.setState(State.INGAME);
+            }
+        }
     }
 
     void keyReleased(KeyEvent e) { //releasing the arrow keys, the paddle stops moving
