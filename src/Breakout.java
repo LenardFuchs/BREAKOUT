@@ -6,29 +6,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 public class Breakout extends JFrame {
 
-    public class Breakout {
-        public static void main(String[] args) {
 
-            while (spielLäuft) {
-
-
-                if (pauseGedrückt) {
-                    int option = JOptionPane.showOptionDialog(
-                            null, "Spiel pausiert", "Pausenmenü",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
-                            null, new Object[]{ "Fortsetzen", "Neustarten", "Beenden" },
-                            "Fortsetzen");
-
-                    if (option == 1) {
-
-                    } else if (option == 2) {
-                        spielLäuft = false;
-                    }
-                    //
-                }
-            }
-        }
-    }
     public Breakout() {
 
         initUI();
@@ -46,7 +24,24 @@ public class Breakout extends JFrame {
     }
 
     public static void main(String[] args) {
+        while (spielLäuft) {
 
+
+            if (pauseGedrückt) {
+                int option = JOptionPane.showOptionDialog(
+                        null, "Spiel pausiert", "Pausenmenü",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                        null, new Object[]{ "Fortsetzen", "Neustarten", "Beenden" },
+                        "Fortsetzen");
+
+                if (option == 1) {
+
+                } else if (option == 2) {
+                    spielLäuft = false;
+                }
+                //
+            }
+        }
         EventQueue.invokeLater(() -> {
 
             var game = new Breakout();
