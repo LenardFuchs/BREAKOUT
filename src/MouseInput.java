@@ -4,6 +4,7 @@ import java.awt.event.MouseListener;
 
 public class MouseInput implements MouseListener {
 
+
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -16,13 +17,22 @@ public class MouseInput implements MouseListener {
             int mx = e.getX();
             int my = e.getY();
        // public Rectangle playButton = new Rectangle(Commons.WIDTH/2 -50 ,150,100,50);
+
         if (mx >Commons.WIDTH/2 -50 && mx <= Commons.WIDTH/2 +50){
             if (my>= 150 && my<= 200 ){
-                 Board.setState(State.INGAME);
-                 System.out.println("click");
+                if (Board.state ==State.MENU) {
+                    Board.setState(State.INGAME);
+                    System.out.println("click");
+                }
+                else if (Board.state == State.GAMEOVER){
+                    System.out.println("go back");
+                    Board.setState(State.MENU);
+
+                }
+                }
             }
         }
-    }
+
 
     @Override
     public void mouseReleased(MouseEvent e) {

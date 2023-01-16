@@ -118,8 +118,8 @@ public class Ball extends Sprite {
 
         if(!launched){
             launched = true;
-            xdir = 1;
-            ydir =-1;
+            xdir = 0;
+            ydir = -1;
         }
 
     }
