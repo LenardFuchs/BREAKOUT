@@ -39,7 +39,7 @@ public class Breakout extends JFrame {
                 } else if (option == 2) {
                     spielLäuft = false;
                 }
-                //
+
             }
         }
         EventQueue.invokeLater(() -> {
