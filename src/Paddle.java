@@ -64,14 +64,6 @@ public class Paddle extends Sprite  {
                 Board.setState(State.INGAME);
             }
         }
-
-        if(key ==KeyEvent.VK_M){
-
-            if (Board.state ==State.INGAME){
-                Board.setState(State.MENU);}
-
-            }
-
     }
 
     void keyReleased(KeyEvent e) { //releasing the arrow keys, the paddle stops moving

@@ -1,11 +1,18 @@
 //https://zetcode.com/javagames/breakout/ 10.01.2023
 
+import com.sun.tools.javac.Main;
+
 import javax.swing.*;
+import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Scanner;
+
+import static java.awt.event.KeyEvent.VK_SPACE;
+import static java.awt.event.KeyEvent.getKeyText;
 
 
 //This is where the magic happens, aka where the logic is written
@@ -23,12 +30,12 @@ public class Board extends JPanel {
     //private boolean inGame = true;
 
 
-    private int lives = 1;//implement lives in the game
+    private int lives = 3;//implement lives in the game
 
 
-    private static int points = 0;
-    private static int finalScore = 0;
-    public static State state = State.MENU;
+    private static int score = 0;
+    private static int finalscore = 0;
+    public static State state;
     public static GameLevel currentLevel;
 
 
@@ -37,16 +44,17 @@ public class Board extends JPanel {
         initBoard();
     }
 
-    public void initBoard() {
+    private void initBoard() {
 
-        //setState(State.MENU);
-        setCurrentLevel(GameLevel.Level1);
+        setState(State.MENU);
+        setCurrentLevel(GameLevel.Level3);
         addKeyListener(new TAdapter());
         setFocusable(true);
         setPreferredSize(new Dimension(Commons.WIDTH, Commons.HEIGHT));
         addMouseListener(new MouseInput());
         timer = new Timer(Commons.PERIOD, new GameCycle());
         timer.start();
+
         gameInit();
 
 
@@ -102,60 +110,9 @@ public class Board extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_QUALITY);
 
-        switch(state){
-            case MENU:
-                //menu.render(g);
-                //Graphics2D g2d = (Graphics2D) g;
 
-                Rectangle playButton = new Rectangle(Commons.WIDTH/2 -50 ,150,100,50);
-
-                Font font0 = new Font("Arial", Font.BOLD, 30);
-                g.setFont(font0);
-                g.setColor(Color.BLUE);
-                g.drawString("BREAK OUT", Commons.WIDTH/2 -90, 100);
-
-                Font font1 = new Font("Arial", Font.BOLD, 14);
-                g.setFont(font1);
-                g.drawString("PLAY", playButton.x + 30, playButton.y+30);
-
-                g2d.draw(playButton);
-                break;
-            case INGAME:
-                drawObjects(g2d);
-                break;
-            case PAUSE:
-                drawObjects(g2d);
-
-                var font = new Font("Comic Sans", Font.BOLD, 18);
-                FontMetrics fontMetrics = this.getFontMetrics(font);
-
-                g2d.setColor(Color.BLACK);
-                g2d.setFont(font);
-                g2d.drawString("GAME PAUSED",
-                        (Commons.WIDTH - fontMetrics.stringWidth("GAME PAUSED")) / 2,
-                        Commons.WIDTH / 2);
-                break;
-            case GAMEOVER:
-                gameOver(g2d);
-                break;
-
-        }
-        /*if (state == State.MENU) {
-            //menu.render(g);
-            //Graphics2D g2d = (Graphics2D) g;
-
-            Rectangle playButton = new Rectangle(Commons.WIDTH/2 -50 ,150,100,50);
-
-            Font font0 = new Font("Arial", Font.BOLD, 30);
-            g.setFont(font0);
-            g.setColor(Color.BLUE);
-            g.drawString("BREAK OUT", Commons.WIDTH/2 -90, 100);
-
-            Font font1 = new Font("Arial", Font.BOLD, 14);
-            g.setFont(font1);
-            g.drawString("PLAY", playButton.x + 30, playButton.y+30);
-
-            g2d.draw(playButton);
+        if (state == State.MENU) {
+            menu.render(g);
 
         } else if (state == State.PAUSE){
             drawObjects(g2d);
@@ -170,6 +127,10 @@ public class Board extends JPanel {
                     Commons.WIDTH / 2);
 
 
+
+
+
+
         } else if (state == State.INGAME) {
 
             drawObjects(g2d);
@@ -179,8 +140,7 @@ public class Board extends JPanel {
             gameOver(g2d);
             //drawObjects(g2d); //shows the bricks when game is over
 
-        }*/
-
+        }
         Toolkit.getDefaultToolkit().sync();
     }
 
@@ -212,7 +172,7 @@ public class Board extends JPanel {
         g2d.setFont(font);
         g2d.setColor(Color.blue);
         g2d.drawString("score:", 30, 20);
-        g2d.drawString(Integer.toString(points), 80, 20);
+        g2d.drawString(Integer.toString(score), 80, 20);
         g2d.drawString("lives:", 220, 20);
         g2d.drawString(Integer.toString(lives), 260, 20);
     }
@@ -231,12 +191,9 @@ public class Board extends JPanel {
                 Commons.WIDTH / 2);
         g2d.drawString("Final Score ", (Commons.WIDTH - fontMetrics.stringWidth("Final Score")) / 2, 230);
 
-        g2d.drawString(Integer.toString(finalScore), (Commons.WIDTH - fontMetrics.stringWidth(Integer.toString(points))) / 2, 270);
+        g2d.drawString(Integer.toString(finalscore), (Commons.WIDTH - fontMetrics.stringWidth(Integer.toString(score))) / 2, 270);
 
         g2d.draw(restartButton);
-        Font font1 = new Font("Arial", Font.BOLD, 14);
-        g2d.setFont(font1);
-        g2d.drawString("PLAY", restartButton.x + 30, restartButton.y+30);
 
 
     }
@@ -305,6 +262,7 @@ public class Board extends JPanel {
                     ball.aimBall();
                     paddle.move();
                 }
+
                 checkCollision();
                 repaint();
 
@@ -312,26 +270,12 @@ public class Board extends JPanel {
         if (state== State.PAUSE){
             repaint();
         }
-        if (state == State.MENU){
-            repaint();
-            gameInit();
-        }
     }
 
     private void stopGame() {
 
-        switch(currentLevel){
-            case Level1:
-                finalScore = points;
-                break;
-            case Level2:
-                finalScore = points + 1500;
-            case Level3:
-                finalScore = points + 3000;
-        }
-
-        setState(State.GAMEOVER);
-        //timer.stop();
+        state = State.GAMEOVER;
+        timer.stop();
     }
 
     private void restartBall() {
@@ -343,16 +287,7 @@ public class Board extends JPanel {
         timer.start();
     }
 
-
-    private void resetPoints(){
-        points = 0;
-
-    }
-
-
-
     private void checkCollision() {
-
 
         if (ball.getRect().getMaxY() > Commons.BOTTOM_EDGE) {  //when the ball hits the bottom,
             lives--; //deduct a life
@@ -371,35 +306,33 @@ public class Board extends JPanel {
         for (int i = 0, j = 0; i < Commons.N_OF_BRICKS; i++) {
 
 
-            if (bricks[i].isDestroyed()) {
-                //whenever we destroy a brick
+            if (bricks[i].isDestroyed()) { //whenever we destroy a brick
                 j++; //add 1 to j
-                points = j * 50;
-
+                score = j * 50;
             }
 
             if (j == Commons.N_OF_BRICKS) { // we check how many bricks are destroyed, if it is equal to initial number of bricks
                 switch (currentLevel) {
                     case Level1:
-                        resetPoints();
+                        finalscore = finalscore + score;
                         setCurrentLevel(GameLevel.Level2);
                         gameInit();
                         break;
                     case Level2:
-                        resetPoints();
+                        finalscore = finalscore + score;
                         setCurrentLevel(GameLevel.Level3);
                         gameInit();
                         break;
                     case Level3:
+                        finalscore = finalscore + score;
                         gameover = "Victory";
                         stopGame();
                 }
+                //gameover = "Victory"; // we win
 
-
+                //new Board();
             }
-
         }
-
 
         if ((ball.getRect()).intersects(paddle.getRect())) {
 
@@ -407,10 +340,10 @@ public class Board extends JPanel {
             int ballLPos = (int) ball.getRect().getMinX();
 
             // divide the paddle into parts. these are the cuts of the parts
-            int first = paddleLPos + 20;
-            int second = paddleLPos + 45;
-            int third = paddleLPos + 70;
-            int fourth = paddleLPos + 90;
+            int first = paddleLPos + 8;
+            int second = paddleLPos + 16;
+            int third = paddleLPos + 24;
+            int fourth = paddleLPos + 32;
 
             if (ballLPos < first) { // ball hits the first part of the paddle
 
