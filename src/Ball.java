@@ -31,7 +31,7 @@ public class Ball extends Sprite {
 
     private void loadImage() {
 
-        var ii = new ImageIcon("src/resources/goldball1.png");
+        var ii = new ImageIcon("src/resources/therockhead.png");
         image = ii.getImage();
     }
 
@@ -118,8 +118,8 @@ public class Ball extends Sprite {
 
         if(!launched){
             launched = true;
-            xdir = 1;
-            ydir =-1;
+            xdir = 0;
+            ydir =-1 ;
         }
 
     }
@@ -132,7 +132,7 @@ public class Ball extends Sprite {
 
         if(!launched){
 
-            x += dx;
+            x += dx *2;
 
             if (x <= 0) {
 

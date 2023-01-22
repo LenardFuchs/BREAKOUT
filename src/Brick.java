@@ -1,54 +1,48 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 import javax.swing.ImageIcon;
 
 public class Brick extends Sprite {
+    private boolean destroyed;
 
-    private boolean destroyed; // in this variable we keep the state of a brick
-
-    public Brick(int x, int y) { //constructor
-
-        initBrick(x, y);
+    public Brick(int x, int y) {
+        this.initBrick(x, y);
     }
 
-    private void initBrick(int x, int y) { //method to create the brick
-
+    private void initBrick(int x, int y) {
         this.x = x;
         this.y = y;
-
-        destroyed = false;
-
-        loadImage();
-        getImageDimensions();
+        this.destroyed = false;
+        this.loadImage();
+        this.getImageDimensions();
     }
 
-    private void loadImage() {  //method to load image file to a certain brick
-
-
-        switch(Board.currentLevel){
-            case Level1:
-                var ii = new ImageIcon("src/resources/choco2.jpg");
-                image = ii.getImage();
+    private void loadImage() {
+        ImageIcon ii;
+        switch (Board.currentLevel) {
+            case LEVEL_1:
+                ii = new ImageIcon("src/resources/bluebelt.png");
+                this.image = ii.getImage();
                 break;
-            case Level2:
-                ii = new ImageIcon("src/resources/star1.jpg");
-                image = ii.getImage();
+            case LEVEL_2:
+                ii = new ImageIcon("src/resources/redbelt.png");
+                this.image = ii.getImage();
                 break;
-            case Level3:
-                ii = new ImageIcon("src/resources/choco2.jpg");
-                image = ii.getImage();
-                break;
+            case LEVEL_3:
+                ii = new ImageIcon("src/resources/goldbelt.png");
+                this.image = ii.getImage();
         }
 
-
     }
 
-    boolean isDestroyed() {  //method which asks what is the state of the brick
-
-        return destroyed;
+    boolean isDestroyed() {
+        return this.destroyed;
     }
 
-    void setDestroyed(boolean val) {  //val is always true, this will set the bricks state to "destroyed"
-
-        destroyed = val;
+    void setDestroyed(boolean val) {
+        this.destroyed = val;
     }
 }
-

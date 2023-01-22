@@ -23,13 +23,13 @@ public class Paddle extends Sprite  {
 
     private void loadImage() {
 
-        var ii = new ImageIcon("src/resources/star1.jpg");
+        var ii = new ImageIcon("src/resources/ring.png");
         image = ii.getImage();
     }
 
     void move() {
 
-        x += dx;
+        x += dx *2;
 
         if (x <= 0) {
 

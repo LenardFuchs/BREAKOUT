@@ -1,24 +1,47 @@
+import javax.swing.*;
 import java.awt.*;
+import java.awt.Image;
 
 
 public class Menu {
 
-    public Rectangle playButton = new Rectangle(Commons.WIDTH/2 -50 ,150,100,50);
+
+    /*public Rectangle playButton = new Rectangle(Commons.WIDTH/2 -120 ,200,220,80);
+    String launch = "Press  UP  to release the ball.";
+    String movement = "Press / Hold   LEFT and RIGHT  to move the paddle.";
+    String pause = "Press SPACEBAR to pause the game.";*/
+
+
+
+
+
 
 
     public void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
-        Font font0 = new Font("Arial", Font.BOLD, 30);
+        Image background;
+
+        var ii = new ImageIcon("src/resources/menu.png");
+        background = ii.getImage();
+
+        g.drawImage(background, 0, 0, null);
+
+        /*Font font0 = new Font("Arial", Font.BOLD, 50);
         g.setFont(font0);
-        g.setColor(Color.BLUE);
-        g.drawString("BREAK OUT", Commons.WIDTH/2 -90, 100);
+        g.setColor(Color.BLACK);
+        g.drawString("BREAKOUT", Commons.WIDTH/2 -150, 100);
 
-        Font font1 = new Font("Arial", Font.BOLD, 14);
+        Font font1 = new Font("Arial", Font.BOLD, 20);
         g.setFont(font1);
-        g.drawString("PLAY", playButton.x + 30, playButton.y+30);
+        g.setColor(Color.BLACK);
+        g.drawString("PLAY", playButton.x + 20, playButton.y+30);
 
-        g2d.draw(playButton);
+        g.drawString(launch, 245, 400 );
+        g.drawString(movement, 130, 480 );
+        g.drawString(pause, 220, 560 );
+
+        g2d.draw(playButton);*/
 
     }
 }

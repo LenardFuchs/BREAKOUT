@@ -1,2 +1,3 @@
-public enum GameLevel { Level1, Level2, Level3
+public enum GameLevel {
+    LEVEL_1, LEVEL_2, LEVEL_3
 }
