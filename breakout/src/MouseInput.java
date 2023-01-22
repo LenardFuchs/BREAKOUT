@@ -1,8 +1,9 @@
-import java.awt.*;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class MouseInput implements MouseListener {
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -13,17 +14,29 @@ public class MouseInput implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-            int mx = e.getX();
-            int my = e.getY();
-       // public Rectangle playButton = new Rectangle(Commons.WIDTH/2 -50 ,150,100,50);
-        if (mx >100 && mx <= 200){
-            if (my>= 150 && my<= 200 ){
-                 Board.setState(State.INGAME);
-                 System.out.println("click");
+        int mx = e.getX();
+        int my = e.getY();
+        // public Rectangle playButton = new Rectangle(Commons.WIDTH/2 -50 ,150,100,50);
+
+        if (mx > Commons.WIDTH / 2 - 120 && mx <= Commons.WIDTH / 2 + 100) {
+            if (my >= 200 && my <= 280) {
+                if (Board.state == State.MENU) {
+                    Board.setState(State.INGAME);
+                    System.out.println("click");
+
+                } else if (Board.state == State.GAMEOVER) {
+                    System.out.println("go back");
+                    Board.setState(State.MENU);
+
+                } else if (Board.state == State.PAUSE) {
+                    System.out.println("go back");
+                    Board.setState(State.MENU);
+                }
             }
         }
-    }
 
+
+    }
     @Override
     public void mouseReleased(MouseEvent e) {
 

@@ -1,11 +1,13 @@
 //https://zetcode.com/javagames/breakout/ 10.01.2023
 
+import javax.swing.*;
 import java.awt.event.KeyEvent;
-import javax.swing.ImageIcon;
 
 public class Paddle extends Sprite  {
 
-    private int dx; // direction variable
+    private int dx;
+
+    // direction variable
 
     public Paddle() {
 
@@ -21,13 +23,13 @@ public class Paddle extends Sprite  {
 
     private void loadImage() {
 
-        var ii = new ImageIcon("src/resources/stick.jpg");
+        var ii = new ImageIcon("breakout/src/resources/ring.png");
         image = ii.getImage();
     }
 
     void move() {
 
-        x += dx;
+        x += dx *2;
 
         if (x <= 0) {
 
@@ -53,6 +55,15 @@ public class Paddle extends Sprite  {
 
             dx = 1; // paddle moves to the right
         }
+        if(key ==KeyEvent.VK_SPACE){
+
+            if (Board.state ==State.INGAME){
+            Board.setState(State.PAUSE);}
+
+            else if (Board.state ==State.PAUSE){
+                Board.setState(State.INGAME);
+            }
+        }
     }
 
     void keyReleased(KeyEvent e) { //releasing the arrow keys, the paddle stops moving
@@ -63,7 +74,6 @@ public class Paddle extends Sprite  {
 
             dx = 0;
         }
-
         if (key == KeyEvent.VK_RIGHT) {
 
             dx = 0;

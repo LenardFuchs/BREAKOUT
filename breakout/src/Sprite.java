@@ -1,5 +1,4 @@
-import java.awt.Image; //Image class in Java is an abstract superclass for all the other classes used for graphical image representation.
-import java.awt.Rectangle; //the Rectangle class in the java.awt package provides constructors and methods
+import java.awt.*;
 
 
 //This is the base class for all the objects in the board,

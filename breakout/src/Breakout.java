@@ -1,9 +1,9 @@
 //https://zetcode.com/javagames/breakout/ 10.01.2023
 
-import javax.swing.JFrame;
-import java.awt.EventQueue;
-
+import javax.swing.*;
+import java.awt.*;
 public class Breakout extends JFrame {
+
 
     public Breakout() {
 
@@ -17,29 +17,12 @@ public class Breakout extends JFrame {
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setResizable(true);
+        setResizable(false);
         pack();
     }
 
     public static void main(String[] args) {
-        while (spielLäuft) {
 
-
-            if (pauseGedrückt) {
-                int option = JOptionPane.showOptionDialog(
-                        null, "Spiel pausiert", "Pausenmenü",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
-                        null, new Object[]{ "Fortsetzen", "Neustarten", "Beenden" },
-                        "Fortsetzen");
-
-                if (option == 1) {
-
-                } else if (option == 2) {
-                    spielLäuft = false;
-                }
-                //
-            }
-        }
         EventQueue.invokeLater(() -> {
 
             var game = new Breakout();

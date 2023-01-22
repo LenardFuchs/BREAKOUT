@@ -1,10 +1,16 @@
 //core code from https://zetcode.com/javagames/breakout/ 10.01.2023
 
-import javax.swing.ImageIcon; //class Imageicon that paints Icons from Images
+import javax.swing.*;
+import java.awt.event.KeyEvent;
+
 public class Ball extends Sprite {
 
     private int xdir; //variable  for the directions of the ball in the X coordinate -1 = left, 1 = right
     private int ydir; //variable for the directions of the ball in the Y coordinate, -1 = up , 1 = down
+
+    private int dx;
+
+    private boolean launched;
 
     public Ball() { //constructor
 
@@ -13,8 +19,9 @@ public class Ball extends Sprite {
 
     private void initBall() { //initial movement of the ball, up and to the right
 
-        xdir = 1;
-        ydir = -1;
+        launched = false;
+        xdir = 0;
+        ydir = 0;
 
         loadImage();
         getImageDimensions();
@@ -23,7 +30,7 @@ public class Ball extends Sprite {
 
     private void loadImage() {
 
-        var ii = new ImageIcon("src/resources/the rock (1).jpg");
+        var ii = new ImageIcon("breakout/src/resources/therockhead.png");
         image = ii.getImage();
     }
 
@@ -40,6 +47,7 @@ public class Ball extends Sprite {
 
     void move() { // this method controls how the ball should move
 
+        if (launched){
         x += xdir;
         y += ydir;
 
@@ -58,7 +66,7 @@ public class Ball extends Sprite {
         if (y == 0) { // if the ball hits the upper border,
 
             setYDir(1); //the ball goes down
-        }
+        }}
     }
 
     private void resetState() {
@@ -67,7 +75,84 @@ public class Ball extends Sprite {
         y = Commons.INIT_BALL_Y;
     }
 
+    void keyPressed(KeyEvent e) {
+
+        int key = e.getKeyCode();
 
 
-}
+            if (key == KeyEvent.VK_UP) {
+
+                launchBall();
+
+            }
+
+            if (key == KeyEvent.VK_LEFT){
+                dx = -1;
+            }
+            if (key == KeyEvent.VK_RIGHT){
+                dx = 1;
+            }
+
+
+    }
+
+    void keyReleased(KeyEvent e) { //releasing the arrow keys, the paddle stops moving
+
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_LEFT) {
+
+            dx = 0;
+        }
+        if (key == KeyEvent.VK_RIGHT) {
+
+            dx = 0;
+        }
+
+    }
+
+
+
+    void launchBall(){
+
+        if(!launched){
+            launched = true;
+            xdir = 0;
+            ydir =-1 ;
+        }
+
+    }
+
+    public boolean isLaunched(){
+        return launched;
+    }
+
+    public void aimBall(){
+
+        if(!launched){
+
+            x += dx *2;
+
+            if (x <= 0) {
+
+                x = 0;
+            }
+
+            if (x >= Commons.WIDTH - imageWidth) {
+
+                x = Commons.WIDTH - imageWidth;
+            }
+        }
+
+        }
+
+    }
+
+
+
+
+
+
+
+
 

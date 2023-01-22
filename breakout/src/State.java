@@ -1,4 +1,4 @@
-public enum State {  MENU, INGAME, GAMEOVER
+public enum State {  MENU, INGAME, GAMEOVER, PAUSE
 
 
 
