@@ -20,6 +20,7 @@ public class MouseInput implements MouseListener {
 
         if (mx > Commons.WIDTH / 2 - 120 && mx <= Commons.WIDTH / 2 + 100) {
             if (my >= 200 && my <= 280) {
+                SoundHandler.runMusic("breakout/src/resources/confirm.wav");
                 if (Board.state == State.MENU) {
                     Board.setState(State.INGAME);
                     System.out.println("click");

@@ -358,6 +358,8 @@ public class Board extends JPanel {
 
         if ((ball.getRect()).intersects(paddle.getRect())) {
 
+            SoundHandler.runMusic("breakout/src/resources/Kick.wav");
+
             int paddleLPos = (int) paddle.getRect().getMinX();
             int ballLPos = (int) ball.getRect().getMinX();
 
@@ -416,6 +418,8 @@ public class Board extends JPanel {
                 var pointBottom = new Point(ballLeft, ballTop + ballHeight + 1); // point bottom part of the ball
 
                 if (!bricks[i].isDestroyed()) {
+
+                    SoundHandler.runMusic("breakout/src/resources/Puff.wav");
 
                     if (bricks[i].getRect().contains(pointRight)) { // brick is hit by the right side of the ball; brick is hit from the left side
 
