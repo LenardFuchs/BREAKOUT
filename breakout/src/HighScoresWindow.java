@@ -97,9 +97,9 @@ public class HighScoresWindow extends JDialog
     }
 
     /**
-     * Creates a window that shows the top N high scores in the snake game.
+     * Creates a window that shows the top N high scores in the BREAKOUT game.
      *
-     * @param parentFrame The parent frame of the snake game.
+     * @param parentFrame The parent frame of the BREAKOUT game.
      * @param highScoreMngr The high score manager instance that contains the loaded high score leaderboard.
      */
     public HighScoresWindow(Board parentFrame, HighScoreManager highScoreMngr)
