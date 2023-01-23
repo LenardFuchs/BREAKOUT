@@ -66,7 +66,7 @@ public class HighScoreManager
      */
     private String getFileHeaderComment()
     {
-        return COMMENT_PREFIX + " This file stores the high scores for the Snake Game by Darian Benam.\n" + COMMENT_PREFIX + " MODIFYING THIS FILE CAN RESULT IN DATA CORRUPTION / UNEXPECTED PROGRAM BEHAVIOUR.\n\n";
+        return COMMENT_PREFIX + " This file stores the high scores for the BREAKOUT Game by PROG KINGS.\n" + COMMENT_PREFIX + " MODIFYING THIS FILE CAN RESULT IN DATA CORRUPTION / UNEXPECTED PROGRAM BEHAVIOUR.\n\n";
     }
 
     /**
