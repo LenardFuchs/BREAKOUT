@@ -26,15 +26,15 @@ public class Obstacle extends Sprite{
 
         switch(Board.currentLevel){
             case LEVEL_1:
-                var ii = new ImageIcon("src/resources/hart.png");
+                var ii = new ImageIcon("breakout/src/resources/hart.png");
                 image = ii.getImage();
                 break;
             case LEVEL_2:
-                ii = new ImageIcon("src/resources/undertaker.png");
+                ii = new ImageIcon("breakout/src/resources/undertaker.png");
                 image = ii.getImage();
                 break;
             case LEVEL_3:
-                ii = new ImageIcon("src/resources/cena.png");
+                ii = new ImageIcon("breakout/src/resources/cena.png");
                 image = ii.getImage();
                 break;
         }
