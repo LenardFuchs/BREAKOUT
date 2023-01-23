@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 
 //This is where the magic happens, aka where the logic is written
@@ -15,6 +16,8 @@ public class Board extends JPanel {
     private Timer timer;
     private String gameover = "GAME OVER";
 
+    public static HighScoreManager highScoreMngr;
+
     private Ball ball;
     private Paddle paddle;
     private Brick[] bricks;
@@ -23,6 +26,7 @@ public class Board extends JPanel {
     private Pause pause = new Pause();
     public static State state = State.MENU;
     public static GameLevel currentLevel;
+
 
 
     private int lives = 3;//implement lives in the game
@@ -48,7 +52,9 @@ public class Board extends JPanel {
         addMouseListener(new MouseInput());
         timer = new Timer(Commons.PERIOD, new GameCycle());
         timer.start();
+        initHighScoreManager();
         gameInit();
+
 
 
     }
@@ -283,6 +289,8 @@ public class Board extends JPanel {
                 finalScore = points + 3000;
                 break;
         }setState(State.GAMEOVER);
+        handleNewHighScore();
+
 
 
         //timer.stop();
@@ -300,6 +308,11 @@ public class Board extends JPanel {
 
     private void resetPoints(){
         points = 0;
+
+    }
+
+    private void createHighScores(){
+        //scoreTable =
 
     }
 
@@ -486,5 +499,93 @@ public class Board extends JPanel {
 
 
 
+    }
+
+    private void initHighScoreManager()
+    {
+        highScoreMngr = new HighScoreManager();
+
+        try
+        {
+            highScoreMngr.loadHighScores();
+        }
+        catch (Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, "An error occured while trying to load the high score file (" + highScoreMngr.HIGH_SCORE_FILE_PATH + ").\n\nError Message: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+    private void handleNewHighScore()
+    {
+        if (finalScore>0)
+        {
+            int rank = highScoreMngr.getHighScoreRank(finalScore);
+
+            if (rank != -1)
+            {
+                String name;
+                boolean cancelled = false;
+                boolean invalidName = false;
+
+                while (true) // Loop forever until a valid name is entered
+                {
+                    name = JOptionPane.showInputDialog(null, "You achieved a high score! Enter your name to be displayed on the high score board:", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+
+                    if (name == null) // User pressed cancel
+                    {
+                        int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel? Your high score will not be saved.", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+                        if (result == JOptionPane.YES_OPTION)
+                        {
+                            cancelled = true;
+
+                            break;
+                        }
+                    }
+                    else // User entered data in the text field
+                    {
+                        if (highScoreMngr.isValidName(name))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            invalidName = true;
+                        }
+                    }
+
+                    if (invalidName)
+                    {
+                        JOptionPane.showMessageDialog(null, "The name you entered is invalid. A valid name cannot contain \"" + highScoreMngr.getDataDelimiter() + "\" and also it must be between " + highScoreMngr.MIN_NAME_LENGTH + " and " + highScoreMngr.MAX_NAME_LENGTH + " characters in length.", "Error", JOptionPane.ERROR_MESSAGE);
+
+                        invalidName = false; // Reset this for the next iteration of the while loop
+                    }
+                } // End while
+
+                if (!cancelled)
+                {
+                    highScoreMngr.updateHighScore(rank, name, finalScore);
+
+                    try
+                    {
+                        highScoreMngr.saveHighScores();
+
+                        showHighScoreWindow();
+                    }
+                    catch (IOException ex)
+                    {
+                        JOptionPane.showMessageDialog(null, "An error occured while trying to save the high score file (" + highScoreMngr.HIGH_SCORE_FILE_PATH + ").\n\nError Message: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        }
+    }
+
+
+    public static void showHighScoreWindow() {
+
+        HighScoresWindow hsWindow = new HighScoresWindow(new Board(), highScoreMngr);
+        hsWindow.setVisible(true);
     }
 }

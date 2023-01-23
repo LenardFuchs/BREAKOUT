@@ -33,11 +33,21 @@ public class MouseInput implements MouseListener {
                     System.out.println("go back");
                     Board.setState(State.MENU);
                 }
+            } else if(my >= 300 && my <= 380){
+                if(Board.state== State.MENU){
+                    Board.showHighScoreWindow();
+                }
             }
+
+
         }
 
 
     }
+
+
+
+
     @Override
     public void mouseReleased(MouseEvent e) {
 

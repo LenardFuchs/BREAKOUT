@@ -26,11 +26,14 @@ public class Breakout extends JFrame {
         SoundHandler.loopMusic("breakout/src/resources/Theme.wav");
 
 
+
+
         //System.out.println("Music");
         EventQueue.invokeLater(() -> {
 
             var game = new Breakout();
             game.setVisible(true);
+
         });
 
     }
