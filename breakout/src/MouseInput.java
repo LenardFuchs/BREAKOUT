@@ -34,6 +34,7 @@ public class MouseInput implements MouseListener {
                     Board.setState(State.MENU);
                 }
             } else if(my >= 300 && my <= 380){
+                SoundHandler.runMusic("breakout/src/resources/confirm.wav");
                 if(Board.state== State.MENU){
                     Board.showHighScoreWindow();
                 }
